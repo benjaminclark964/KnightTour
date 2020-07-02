@@ -3,6 +3,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+//254727174
+
 public class KnightTour {
 
     final static int POSSIBLE_HORSE_MOVES = 8;
