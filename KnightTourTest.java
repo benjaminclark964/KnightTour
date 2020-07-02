@@ -6,12 +6,12 @@ public class KnightTourTest {
      * @param args no args
      */
     public static void main(String[] args) {
-      KnightBoard basicBoard = new KnightBoard(6);
-      basicSearchTestBoard(basicBoard, 1, 1);
-      assertBasicSearchBoard(basicBoard);
-//      KnightBoard heuristicOneBoard = new KnightBoard(6);
-//      heuristicOneTestBoard(heuristicOneBoard, 1, 1);
-//      assertHeuristicOneBoard(heuristicOneBoard);
+//      KnightBoard basicBoard = new KnightBoard(6);
+//      basicSearchTestBoard(basicBoard, 1, 1);
+//      assertBasicSearchBoard(basicBoard);
+      KnightBoard heuristicOneBoard = new KnightBoard(6);
+      heuristicOneTestBoard(heuristicOneBoard, 1, 1);
+      assertHeuristicOneBoard(heuristicOneBoard);
     }
 
     /**
@@ -24,16 +24,17 @@ public class KnightTourTest {
         if(successfulMoves == 11) {
             return;
         }
+
         Position currentPosition = new Position(px,py);
         board.getBoard()[px][py] = successfulMoves;
         int triedMoves = 0;
         while(triedMoves < 8) {
-            if(currentPosition.moveHorseHeuristicOne(px, py, board, triedMoves)) {
+            if(currentPosition.moveHorseHeuristicOne(px, py, board)) {
                 if(successfulMoves == 11) {
                     return;
                 }
                 successfulMoves++;
-                basicSearchTestBoard(board, currentPosition.x, currentPosition.y);
+                heuristicOneTestBoard(board, currentPosition.x, currentPosition.y);
                 currentPosition.x = currentPosition.previous[0];
                 currentPosition.y = currentPosition.previous[1];
             }
@@ -54,8 +55,8 @@ public class KnightTourTest {
         assert testBoard.getBoard()[4][3] == 6;
         assert testBoard.getBoard()[5][1] == 7;
         assert testBoard.getBoard()[3][0] == 8;
-        assert testBoard.getBoard()[4][2] == 9;
-        assert testBoard.getBoard()[5][0] == 10;
+        assert testBoard.getBoard()[2][2] == 9;
+        assert testBoard.getBoard()[1][0] == 10;
     }
 
     /**
