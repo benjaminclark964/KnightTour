@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 public class KnightTourTest {
     private static int successfulMoves = 1;
 
@@ -24,25 +26,39 @@ public class KnightTourTest {
      * @param py col
      */
     private static void heuristicOneTestBoard(KnightBoard board, int px, int py) {
+        board.getBoard()[px][py] = successfulMoves;
+
         if(successfulMoves == 11) {
             return;
         }
 
-        Position currentPosition = new Position(px,py);
-        board.getBoard()[px][py] = successfulMoves;
+        if(successfulMoves == 26) {
+            int l = 0;
+        }
+
+        Position currentPosition = new Position(px, py);
         int triedMoves = 0;
+        HashMap<Integer, Integer> usedIndexes = new HashMap<>();
         while(triedMoves < 8) {
-            if(currentPosition.moveHorseHeuristicOne(px, py, board)) {
+            if(currentPosition.moveHorseHeuristicOne(px, py, board, usedIndexes)) {
+                successfulMoves++;
                 if(successfulMoves == 11) {
                     return;
                 }
-                successfulMoves++;
+                usedIndexes.put(currentPosition.lastUsedIndex, triedMoves);
                 heuristicOneTestBoard(board, currentPosition.x, currentPosition.y);
                 currentPosition.x = currentPosition.previous[0];
                 currentPosition.y = currentPosition.previous[1];
             }
             triedMoves++;
         }
+
+        if(successfulMoves != 36) {
+            board.getBoard()[currentPosition.x][currentPosition.y] = 0;
+            successfulMoves--;
+        }
+
+        return;
     }
 
     /**

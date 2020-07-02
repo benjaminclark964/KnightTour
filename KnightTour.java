@@ -1,4 +1,7 @@
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 public class KnightTour {
 
@@ -22,14 +25,10 @@ public class KnightTour {
 
             if(args[0].equals("0")) {
                 basicSearch(board, px, py);
-                if(successfulMoves == boardSize*boardSize) {
-                    System.out.println("The total number of moves is " + attemptedMoves);
-                    printSolution(board.getBoard(), boardSize);
-                } else {
-                    System.out.println("The total number of moves is " + attemptedMoves);
-                }
+                printResults(board);
             } else if(args[0].equals("1")) {
-                heurtisticOne();
+                heuristicOne(board, px, py);
+                printResults(board);
             } else if(args[0].equals("2")) {
                 heuristicTwo();
             } else {
@@ -80,8 +79,39 @@ public class KnightTour {
         return board;
     }
 
-    public static void heurtisticOne() {
+    public static KnightBoard heuristicOne(KnightBoard board, int px, int py) {
 
+        board.getBoard()[px][py] = successfulMoves;
+
+        if(successfulMoves == boardSize*boardSize) {
+            return board;
+        }
+
+        if(successfulMoves == 26) {
+            int l = 0;
+        }
+
+        Position currentPosition = new Position(px, py);
+        int triedMoves = 0;
+        HashMap<Integer, Integer> usedIndexes = new HashMap<>();
+        while(triedMoves < POSSIBLE_HORSE_MOVES) {
+            if(currentPosition.moveHorseHeuristicOne(px, py, board, usedIndexes)) {
+                successfulMoves++;
+                attemptedMoves++;
+                usedIndexes.put(currentPosition.lastUsedIndex, triedMoves);
+                heuristicOne(board, currentPosition.x, currentPosition.y);
+                currentPosition.x = currentPosition.previous[0];
+                currentPosition.y = currentPosition.previous[1];
+            }
+            triedMoves++;
+        }
+
+        if(successfulMoves != boardSize*boardSize) {
+            board.getBoard()[currentPosition.x][currentPosition.y] = 0;
+            successfulMoves--;
+        }
+
+        return board;
     }
 
     public static void heuristicTwo() {
@@ -95,6 +125,16 @@ public class KnightTour {
             }
             //create new lines
             System.out.println();
+        }
+    }
+
+    public static void printResults(KnightBoard board) {
+        if(successfulMoves == boardSize*boardSize) {
+            System.out.println("The total number of moves is " + attemptedMoves);
+            printSolution(board.getBoard(), boardSize);
+        } else {
+            System.out.println("The total number of moves is " + attemptedMoves);
+            System.err.print("No Solution Found!");
         }
     }
 

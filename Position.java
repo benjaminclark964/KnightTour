@@ -1,3 +1,4 @@
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -9,6 +10,7 @@ public class Position {
     public int[] xMoves = {1, 2, 2, 1, -1, -2, -2, -1};
     public int[] yMoves = {-2, -1, 1, 2, 2, 1, -1, -2};
     public int[] previous = new int[2];
+    public int lastUsedIndex = 8;
 
     public Position(int x, int y) {
         this.x = x;
@@ -34,33 +36,38 @@ public class Position {
         return false;
     }
 
-    public boolean moveHorseHeuristicOne(int x, int y, KnightBoard board) {
+    public boolean moveHorseHeuristicOne(int x, int y, KnightBoard board, HashMap<Integer, Integer> used) {
         savePreviousPosition(x, y);
         Queue<List<Integer>> q = new LinkedList<>();
         int smallestBoarder = 8;
 
-        for(int i = 0; i < POSSIBLE_MOVES; i++) {
-            if(moveHorseClockWise(x, y, board, i)) {
+        for(int i = 0; i < 8; i++) {
+            if (moveHorseClockWise(x, y, board, i)) {
                 LinkedList<Integer> coordinates = new LinkedList<>();
                 int borderDistance = calculateDistanceFromBorder(this.x, this.y, board.n);
 
-                if(borderDistance < smallestBoarder) {
+                if (borderDistance < smallestBoarder && !used.containsKey(i)) {
+                    lastUsedIndex = i;
                     smallestBoarder = borderDistance;
                     coordinates.add(this.x);
                     coordinates.add(this.y);
                     q.clear();
                     q.add(coordinates);
-                } else if(borderDistance == smallestBoarder) {
+                } else if (borderDistance == smallestBoarder) {
                     continue;
                 }
             }
         }
+
 
         if(!q.isEmpty()) {
             List<Integer> nextMove = q.remove();
             this.x = nextMove.remove(0);
             this.y = nextMove.remove(0);
             return true;
+        } else {
+            this.x = x;
+            this.y = y;
         }
 
         return false;
@@ -68,8 +75,8 @@ public class Position {
 
     private int calculateDistanceFromBorder(int x,  int y, int borderSize) {
         int distanceFromBorder = 0;
-        int smallerVerticalDistance = getSmallerVerticalDistance(this.x, borderSize);
-        int smallerHorizontalDifference = getSmallerHorizontalDifference(this.y, borderSize);
+        int smallerVerticalDistance = getSmallerVerticalDistance(x, borderSize);
+        int smallerHorizontalDifference = getSmallerHorizontalDifference(y, borderSize);
 
         distanceFromBorder += smallerVerticalDistance;
         distanceFromBorder += smallerHorizontalDifference;
