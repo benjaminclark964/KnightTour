@@ -5,13 +5,16 @@ public class KnightTourTest {
      * Driver
      * @param args no args
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) {    //comment out the versions you are not wanting to test
+        //basic search tests
 //      KnightBoard basicBoard = new KnightBoard(6);
 //      basicSearchTestBoard(basicBoard, 1, 1);
 //      assertBasicSearchBoard(basicBoard);
+      //heuristic one tests
       KnightBoard heuristicOneBoard = new KnightBoard(6);
       heuristicOneTestBoard(heuristicOneBoard, 1, 1);
       assertHeuristicOneBoard(heuristicOneBoard);
+      //heuristic two tests
     }
 
     /**

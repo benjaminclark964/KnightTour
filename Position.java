@@ -68,14 +68,28 @@ public class Position {
 
     private int calculateDistanceFromBorder(int x,  int y, int borderSize) {
         int distanceFromBorder = 0;
-        int smallerVerticalDistance;
-        int smallerHorizontalDifference;
+        int smallerVerticalDistance = getSmallerVerticalDistance(this.x, borderSize);
+        int smallerHorizontalDifference = getSmallerHorizontalDifference(this.y, borderSize);
 
+        distanceFromBorder += smallerVerticalDistance;
+        distanceFromBorder += smallerHorizontalDifference;
+
+        return distanceFromBorder;
+    }
+
+    private int getSmallerVerticalDistance(int x, int borderSize) {
+        int smallerVerticalDistance = 0;
         if(this.x >= (borderSize/2)) {
             smallerVerticalDistance = Math.abs(x-borderSize);
         } else {
             smallerVerticalDistance = x;
         }
+
+        return smallerVerticalDistance;
+    }
+
+    private int getSmallerHorizontalDifference(int y, int borderSize) {
+        int smallerHorizontalDifference = 0;
 
         if(this.y >= (borderSize/2)) {
             smallerHorizontalDifference = Math.abs(y-borderSize);
@@ -83,10 +97,7 @@ public class Position {
             smallerHorizontalDifference = y;
         }
 
-        distanceFromBorder += smallerVerticalDistance;
-        distanceFromBorder += smallerHorizontalDifference;
-
-        return distanceFromBorder;
+        return smallerHorizontalDifference;
     }
 
     private boolean checkIfNotOutOfBounds(int x, int y, int i, KnightBoard board) {
