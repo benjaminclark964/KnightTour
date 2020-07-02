@@ -3,7 +3,6 @@ public class Position {
     public int y;
     public int[] xMoves = {1, 2, 2, 1, -1, -2, -2, -1};
     public int[] yMoves = {-2, -1, 1, 2, 2, 1, -1, -2};
-    public int moves = 0;
     public int[] previous = new int[2];
 
     public Position(int x, int y) {
@@ -19,9 +18,7 @@ public class Position {
     public boolean moveHorseClockWise(int x, int y, KnightBoard board, int i) {
         savePreviousPosition(x, y);
 
-        moves ++;
-        if(y + xMoves[i] >= 0 && y + xMoves[i] < board.n
-        && x + yMoves[i] >= 0 && x + yMoves[i] < board.n) {
+        if(checkIfOutOfBounds(x, y, i, board)) {
             if (board.isValidPosition(xMoves[i] + y, yMoves[i] + x)) {
                 this.x = yMoves[i] + x;
                 this.y = xMoves[i] + y;
@@ -30,6 +27,22 @@ public class Position {
         }
 
         return false;
+    }
+
+    public boolean moveHorseHeuristicOne(int x, int y, KnightBoard board, int i) {
+        savePreviousPosition(x, y);
+
+        return false;
+    }
+
+    private boolean checkIfOutOfBounds(int x, int y, int i, KnightBoard board) {
+        boolean goodCoordinates = false;
+        if(y + xMoves[i] >= 0 && y + xMoves[i] < board.n
+                && x + yMoves[i] >= 0 && x + yMoves[i] < board.n) {
+            goodCoordinates = true;
+        }
+
+        return goodCoordinates;
     }
 
     public void savePreviousPosition(int x, int y) {

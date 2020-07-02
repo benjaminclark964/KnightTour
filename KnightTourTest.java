@@ -6,9 +6,12 @@ public class KnightTourTest {
      * @param args no args
      */
     public static void main(String[] args) {
-      KnightBoard testBoard = new KnightBoard(6);
-      basicSearchTestBoard(testBoard, 1, 1);
-      assertBasicSearchBoard(testBoard);
+      KnightBoard basicBoard = new KnightBoard(6);
+      basicSearchTestBoard(basicBoard, 1, 1);
+      assertBasicSearchBoard(basicBoard);
+//      KnightBoard heuristicOneBoard = new KnightBoard(6);
+//      heuristicOneTestBoard(heuristicOneBoard, 1, 1);
+//      assertHeuristicOneBoard(heuristicOneBoard);
     }
 
     /**
@@ -18,15 +21,41 @@ public class KnightTourTest {
      * @param py col
      */
     private static void heuristicOneTestBoard(KnightBoard board, int px, int py) {
-
+        if(successfulMoves == 11) {
+            return;
+        }
+        Position currentPosition = new Position(px,py);
+        board.getBoard()[px][py] = successfulMoves;
+        int triedMoves = 0;
+        while(triedMoves < 8) {
+            if(currentPosition.moveHorseHeuristicOne(px, py, board, triedMoves)) {
+                if(successfulMoves == 11) {
+                    return;
+                }
+                successfulMoves++;
+                basicSearchTestBoard(board, currentPosition.x, currentPosition.y);
+                currentPosition.x = currentPosition.previous[0];
+                currentPosition.y = currentPosition.previous[1];
+            }
+            triedMoves++;
+        }
     }
 
     /**
      * asserts the first ten positions on the board are correct
-     * @param board KnightBoard
+     * @param testBoard KnightBoard
      */
-    private static void assertHeuristicOneBoard(KnightBoard board) {
-
+    private static void assertHeuristicOneBoard(KnightBoard testBoard) {
+        assert testBoard.getBoard()[1][1] == 1;
+        assert testBoard.getBoard()[0][3] == 2;
+        assert testBoard.getBoard()[1][5] == 3;
+        assert testBoard.getBoard()[3][4] == 4;
+        assert testBoard.getBoard()[5][5] == 5;
+        assert testBoard.getBoard()[4][3] == 6;
+        assert testBoard.getBoard()[5][1] == 7;
+        assert testBoard.getBoard()[3][0] == 8;
+        assert testBoard.getBoard()[4][2] == 9;
+        assert testBoard.getBoard()[5][0] == 10;
     }
 
     /**
