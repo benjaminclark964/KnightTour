@@ -55,9 +55,10 @@ public class KnightTour {
         int triedMoves = 0;
 
         while(triedMoves < POSSIBLE_HORSE_MOVES) {
-            attemptedMoves++;
-            System.out.println(attemptedMoves);
+
+
             if(currentPosition.moveHorseClockWise(px, py, board, triedMoves)) {
+                attemptedMoves++;
                 successfulMoves++;
                 basicSearch(board, currentPosition.x, currentPosition.y);
                 currentPosition.x = currentPosition.previous[0];
