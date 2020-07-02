@@ -13,10 +13,68 @@ public class KnightTourTest {
 //      basicSearchTestBoard(basicBoard, 1, 1);
 //      assertBasicSearchBoard(basicBoard);
       //heuristic one tests
-      KnightBoard heuristicOneBoard = new KnightBoard(6);
-      heuristicOneTestBoard(heuristicOneBoard, 1, 1);
-      assertHeuristicOneBoard(heuristicOneBoard);
+//      KnightBoard heuristicOneBoard = new KnightBoard(6);
+//      heuristicOneTestBoard(heuristicOneBoard, 1, 1);
+//      assertHeuristicOneBoard(heuristicOneBoard);
       //heuristic two tests
+        KnightBoard heuristicTwoBoard = new KnightBoard(6);
+        heuristicTwoTestBoard(heuristicTwoBoard, 1, 1);
+        assertHeuristicTwoBoard(heuristicTwoBoard);
+    }
+
+    private static void heuristicTwoTestBoard(KnightBoard board, int px, int py) {
+        board.getBoard()[px][py] = successfulMoves;
+
+        if(successfulMoves == 11) {
+            return;
+        }
+
+        if(successfulMoves == 26) {
+            int l = 0;
+        }
+
+        Position currentPosition = new Position(px, py);
+        int triedMoves = 0;
+        HashMap<Integer, Integer> usedIndexes = new HashMap<>();
+        while(triedMoves < 8) {
+            if(currentPosition.moveHorseHeuristicTwo(px, py, board, usedIndexes)) {
+                successfulMoves++;
+                if(successfulMoves == 11) {
+                    return;
+                }
+                if(successfulMoves == 2) {
+                    int t = 0;
+                }
+                usedIndexes.put(currentPosition.lastUsedIndex, triedMoves);
+                heuristicTwoTestBoard(board, currentPosition.x, currentPosition.y);
+                currentPosition.x = currentPosition.previous[0];
+                currentPosition.y = currentPosition.previous[1];
+                if(successfulMoves == 11) {
+                    return;
+                }
+            }
+            triedMoves++;
+        }
+
+        if(successfulMoves != 36) {
+            board.getBoard()[currentPosition.x][currentPosition.y] = 0;
+            successfulMoves--;
+        }
+
+        return;
+    }
+
+    private static void assertHeuristicTwoBoard(KnightBoard testBoard) {
+        assert testBoard.getBoard()[1][1] == 1;
+        assert testBoard.getBoard()[0][3] == 2;
+        assert testBoard.getBoard()[1][5] == 3;
+        assert testBoard.getBoard()[3][4] == 4;
+        assert testBoard.getBoard()[5][5] == 5;
+        assert testBoard.getBoard()[4][3] == 6;
+        assert testBoard.getBoard()[5][1] == 7;
+        assert testBoard.getBoard()[3][0] == 8;
+        assert testBoard.getBoard()[2][2] == 9;
+        assert testBoard.getBoard()[1][0] == 10;
     }
 
     /**

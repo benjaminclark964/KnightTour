@@ -41,7 +41,7 @@ public class Position {
         Queue<List<Integer>> q = new LinkedList<>();
         int smallestBoarder = 8;
 
-        for(int i = 0; i < 8; i++) {
+        for(int i = 0; i < POSSIBLE_MOVES; i++) {
             if (moveHorseClockWise(x, y, board, i)) {
                 LinkedList<Integer> coordinates = new LinkedList<>();
                 int borderDistance = calculateDistanceFromBorder(this.x, this.y, board.n);
@@ -87,7 +87,7 @@ public class Position {
     private int getSmallerVerticalDistance(int x, int borderSize) {
         int smallerVerticalDistance = 0;
         if(this.x >= Math.ceil((double)borderSize/(double)2)) {
-            smallerVerticalDistance = Math.abs(x-borderSize)-1;
+            smallerVerticalDistance = Math.abs(x-borderSize)-1; //-1 remove space piece is on
         } else {
             smallerVerticalDistance = x;
         }
@@ -99,7 +99,7 @@ public class Position {
         int smallerHorizontalDifference = 0;
 
         if(this.y >= Math.ceil((double)borderSize/(double)2)) {
-            smallerHorizontalDifference = Math.abs(y-borderSize)-1;
+            smallerHorizontalDifference = Math.abs(y-borderSize)-1; //-1 remove space piece is on
         } else {
             smallerHorizontalDifference = y;
         }
@@ -115,6 +115,42 @@ public class Position {
         }
 
         return goodCoordinates;
+    }
+
+    public boolean moveHorseHeuristicTwo(int x, int y, KnightBoard board, HashMap<Integer, Integer> used) {
+        savePreviousPosition(x, y);
+        int fewestOnwardMoves = POSSIBLE_MOVES;
+        List<Integer> validCoordinates = new LinkedList<>();
+
+        for(int i = 0; i < POSSIBLE_MOVES; i++) {
+            if(moveHorseClockWise(x, y, board, i) && !used.containsKey(i)) {
+                int onwardMoves = 0;
+                int potentialX = this.x;
+                int potentialY = this.y;
+                for(int j = 0; j < POSSIBLE_MOVES; j++) {
+                    if(moveHorseClockWise(potentialX, potentialY, board, j)) {
+                        onwardMoves++;
+                    }
+                }
+                if(onwardMoves < fewestOnwardMoves) {
+                    fewestOnwardMoves = onwardMoves;
+                    validCoordinates.clear();
+                    lastUsedIndex = i;
+                    validCoordinates.add(potentialX);
+                    validCoordinates.add(potentialY);
+                }
+            }
+        }
+
+        if(!validCoordinates.isEmpty()) {
+            this.x = validCoordinates.remove(0);
+            this.y = validCoordinates.remove(0);
+            return true;
+        } else {
+            this.x = x;
+            this.y = y;
+        }
+        return false;
     }
 
     public void savePreviousPosition(int x, int y) {

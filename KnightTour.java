@@ -32,7 +32,8 @@ public class KnightTour {
                 heuristicOne(board, px, py);
                 printResults(board);
             } else if(args[0].equals("2")) {
-                heuristicTwo();
+                heuristicTwo(board, px, py);
+                printResults(board);
             } else {
                 System.err.println("Invalid: Must be 0, 1, or 2");
             }
@@ -116,8 +117,38 @@ public class KnightTour {
         return board;
     }
 
-    public static void heuristicTwo() {
+    public static KnightBoard heuristicTwo(KnightBoard board, int px, int py) {
+        board.getBoard()[px][py] = successfulMoves;
 
+        if(successfulMoves == boardSize*boardSize) {
+            return board;
+        }
+
+        if(successfulMoves == 26) {
+            int l = 0;
+        }
+
+        Position currentPosition = new Position(px, py);
+        int triedMoves = 0;
+        HashMap<Integer, Integer> usedIndexes = new HashMap<>();
+        while(triedMoves < POSSIBLE_HORSE_MOVES) {
+            if(currentPosition.moveHorseHeuristicTwo(px, py, board, usedIndexes)) {
+                successfulMoves++;
+                attemptedMoves++;
+                usedIndexes.put(currentPosition.lastUsedIndex, triedMoves);
+                heuristicTwo(board, currentPosition.x, currentPosition.y);
+                currentPosition.x = currentPosition.previous[0];
+                currentPosition.y = currentPosition.previous[1];
+            }
+            triedMoves++;
+        }
+
+        if(successfulMoves != boardSize*boardSize) {
+            board.getBoard()[currentPosition.x][currentPosition.y] = 0;
+            successfulMoves--;
+        }
+
+        return board;
     }
 
     public static void printSolution(int[][] board, int size) {
