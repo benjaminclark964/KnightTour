@@ -4,7 +4,7 @@ public class KnightTour {
 
     final static int POSSIBLE_HORSE_MOVES = 8;
     private static int successfulMoves = 1;
-    private static long attemptedMoves = 0;
+    private static long attemptedMoves = 1;
     private static int boardSize = 0;
 
     public static void main(String[] args) {
@@ -23,9 +23,10 @@ public class KnightTour {
             if(args[0].equals("0")) {
                 basicSearch(board, px, py);
                 if(successfulMoves == boardSize*boardSize) {
+                    System.out.println("The total number of moves is " + attemptedMoves);
                     printSolution(board.getBoard(), boardSize);
                 } else {
-                    System.out.println(attemptedMoves);
+                    System.out.println("The total number of moves is " + attemptedMoves);
                 }
             } else if(args[0].equals("1")) {
                 heurtisticOne();
