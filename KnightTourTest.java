@@ -45,6 +45,9 @@ public class KnightTourTest {
                 if(successfulMoves == 11) {
                     return;
                 }
+                if(successfulMoves == 8) {
+                    int t = 0;
+                }
                 usedIndexes.put(currentPosition.lastUsedIndex, triedMoves);
                 heuristicOneTestBoard(board, currentPosition.x, currentPosition.y);
                 currentPosition.x = currentPosition.previous[0];
@@ -74,8 +77,8 @@ public class KnightTourTest {
         assert testBoard.getBoard()[4][3] == 6;
         assert testBoard.getBoard()[5][1] == 7;
         assert testBoard.getBoard()[3][0] == 8;
-        assert testBoard.getBoard()[2][2] == 9;
-        assert testBoard.getBoard()[1][0] == 10;
+        assert testBoard.getBoard()[4][2] == 9;
+        assert testBoard.getBoard()[5][0] == 10;
     }
 
     /**

@@ -87,7 +87,7 @@ public class Position {
     private int getSmallerVerticalDistance(int x, int borderSize) {
         int smallerVerticalDistance = 0;
         if(this.x >= Math.ceil((double)borderSize/(double)2)) {
-            smallerVerticalDistance = Math.abs(x-borderSize);
+            smallerVerticalDistance = Math.abs(x-borderSize)-1;
         } else {
             smallerVerticalDistance = x;
         }
@@ -99,7 +99,7 @@ public class Position {
         int smallerHorizontalDifference = 0;
 
         if(this.y >= Math.ceil((double)borderSize/(double)2)) {
-            smallerHorizontalDifference = Math.abs(y-borderSize);
+            smallerHorizontalDifference = Math.abs(y-borderSize)-1;
         } else {
             smallerHorizontalDifference = y;
         }
