@@ -18,7 +18,7 @@ public class Position {
     public boolean moveHorseClockWise(int x, int y, KnightBoard board, int i) {
         savePreviousPosition(x, y);
 
-        if(checkIfOutOfBounds(x, y, i, board)) {
+        if(checkIfNotOutOfBounds(x, y, i, board)) {
             if (board.isValidPosition(xMoves[i] + y, yMoves[i] + x)) {
                 this.x = yMoves[i] + x;
                 this.y = xMoves[i] + y;
@@ -35,7 +35,7 @@ public class Position {
         return false;
     }
 
-    private boolean checkIfOutOfBounds(int x, int y, int i, KnightBoard board) {
+    private boolean checkIfNotOutOfBounds(int x, int y, int i, KnightBoard board) {
         boolean goodCoordinates = false;
         if(y + xMoves[i] >= 0 && y + xMoves[i] < board.n
                 && x + yMoves[i] >= 0 && x + yMoves[i] < board.n) {
