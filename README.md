@@ -1,13 +1,15 @@
 # KnightTour
 
-Author: Benjamin Clark
-Date: 07-04-2020
+## Author: Benjamin Clark
+## Date: 07-04-2020
 
-Basic Search: 0 7 1 1
+## Basic Search: 0 7 1 1
 
-Attempted Moves: 254,727,174
+### Attempted Moves:
 
-Solution:
+254,727,174
+
+### Solution:
 
 21  46  41  2   23  26  9   
 40  1   22  27  10  3   24  
@@ -17,11 +19,13 @@ Solution:
 38  35  18  31  14  5   16  
 49  32  37  6   17  30  13  
 
-Heuristic One: 0 7 1 1
+## Heuristic One: 0 7 1 1
 
-Attempted Moves: 810
+### Attempted Moves: 
 
-Solution: 
+810
+
+### Solution: 
 
 21  44  11  2   23  36  13  
 10  1   22  43  12  3   24  
@@ -31,11 +35,13 @@ Solution:
 32  7   48  17  30  5   26  
 47  18  31  6   27  16  29
 
-Heuristic 2:
+## Heuristic 2:
 
-Attempted Moves: 172
+### Attempted Moves: 
 
-Solution: 
+172
+
+### Solution: 
 
 49  44  11  2   29  42  13  
 10  1   46  43  12  3   28  
