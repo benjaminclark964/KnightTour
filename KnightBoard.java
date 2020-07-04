@@ -1,13 +1,30 @@
+/**
+ * Author: Benjamin Clark
+ *
+ * A class to represent a board object
+ *
+ */
 public class KnightBoard {
     public int[][] board;
     public final int n;
-    public int moveNum = 0;
 
+    /**
+     * Constructor
+     *
+     * @param n dimensions of board
+     */
     public KnightBoard(int n) {
         this.n = n;
         this.board = new int[n][n];
     }
 
+    /**
+     * checks if position is valid
+     *
+     * @param x row coordinate
+     * @param y col coordinate
+     * @return true or false
+     */
     public boolean isValidPosition(int x, int y) {
         boolean isValid = true;
 
@@ -18,21 +35,23 @@ public class KnightBoard {
         return isValid;
     }
 
-//    public void updateBoard(int[][] board, int px, int py, int move) {
-//        board[px][py] = move;
-//    }
-
-    public boolean checkIfDone(long[][] board) {
-        for(int i = 0; i < board.length; i++) {
-            for(int j = 0; j < board.length; j++) {
-                if(board[i][j] == 0) {
-                    return false;
-                }
-            }
-        }
-        return true;
+    /**
+     * adds new position to board
+     *
+     * @param board Knight board
+     * @param px row coordinate
+     * @param py col coordinate
+     * @param move value for coordinate
+     */
+    public void updateBoard(int[][] board, int px, int py, int move) {
+        board[px][py] = move;
     }
 
+    /**
+     * gets 2D array representation of the board
+     *
+     * @return 2D array of board
+     */
     public int[][] getBoard() {
         return this.board;
     }
