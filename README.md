@@ -19,7 +19,7 @@
 38  35  18  31  14  5   16  
 49  32  37  6   17  30  13  
 
-## Heuristic One: 0 7 1 1
+## Heuristic One: 1 7 1 1
 
 ### Attempted Moves: 
 
@@ -35,7 +35,7 @@
 32  7   48  17  30  5   26  
 47  18  31  6   27  16  29
 
-## Heuristic 2:
+## Heuristic 2: 2 7 1 1
 
 ### Attempted Moves: 
 
